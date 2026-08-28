@@ -7,7 +7,7 @@ This repository accompanies the paper:
 
 > **When Should a Network Emit Geometry, and When Should It Detect It?
 > Readout, Reconciliation, and Representation in Floorplan Vectorization**
-> He Zhang — [arXiv:XXXX.XXXXX](https://arxiv.org/abs/XXXX.XXXXX) <!-- TODO: fill in after announcement -->
+> He Zhang — [arXiv:2608.25608](https://arxiv.org/abs/2608.25608)
 
 ## Findings in one table
 
@@ -58,7 +58,7 @@ benchmark so any later copy can be verified.
 
 ## Data licensing, precisely
 
-- **ResPlan-FP** renders and labels derive from [ResPlan](https://arxiv.org/abs/XXXX) (data CC BY 4.0, code MIT) — redistributable, released under **CC BY 4.0**.
+- **ResPlan-FP** renders and labels derive from [ResPlan](https://arxiv.org/abs/2508.14006) (data CC BY 4.0, code MIT) — redistributable, released under **CC BY 4.0**.
 - **skv4** derives from [CubiCasa5K](https://github.com/CubiCasa/CubiCasa5k) (CC BY-NC-SA 4.0) — released under **CC BY-NC-SA 4.0**, research use.
 - Synthetic data (`fpgen`) uses only aggregate listing statistics; no listing text or imagery is included.
 
@@ -69,7 +69,7 @@ benchmark so any later copy can be verified.
   title   = {When Should a Network Emit Geometry, and When Should It Detect It?
              Readout, Reconciliation, and Representation in Floorplan Vectorization},
   author  = {Zhang, He},
-  journal = {arXiv preprint arXiv:XXXX.XXXXX},
+  journal = {arXiv preprint arXiv:2608.25608},
   year    = {2026}
 }
 ```
