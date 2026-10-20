@@ -34,4 +34,19 @@ well-formedness filter (walls need numeric `start`/`end`), the same
 extraction used for the paper. How each system is trained and read out is in
 the paper (Sections 3–5 and Appendix "LLM zero-shot protocol").
 
+**Rooms and validity convention.** Wall-first sequence decode and the graph
+readout emit walls only, so their room F1 is computed on the polygonized faces
+of the predicted wall graph and r_val asks only that the graph enclose faces.
+The paper's LLM row (rooms 0.708, r_val 0.620) was scored under that same
+walls-only convention, i.e. the model's own `rooms` cycles were discarded;
+reproduce it with `--drop-pred-rooms`. Scored on its declared room cycles
+instead, the same file gives rooms 0.524 and r_val 0.045 (most declared cycles
+do not close at the 1.2% weld tolerance). Wall F1, opening F1 and edit cost are
+identical under both readings. The `preds` file keeps the declared rooms.
+
+| LLM row reading | rooms F1 | r_val | wall F1 @0.05 / @0.015 | openings @0.05 |
+|---|---|---|---|---|
+| walls-only (`--drop-pred-rooms`, as in the paper) | 0.708 | 0.620 | 0.811 / 0.472 | 0.752 |
+| declared rooms (default) | 0.524 | 0.045 | 0.811 / 0.472 | 0.752 |
+
 `score.py` also works on the skv4 splits (`--bench data/cubicasa5k-skv4`).

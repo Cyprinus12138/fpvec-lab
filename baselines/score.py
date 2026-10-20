@@ -11,6 +11,12 @@ Protocol (the one every number in the paper and README uses): every plan of the
 split counts; a missing or ``null`` prediction scores zero on every F1, and the
 coverage column reports how many plans had a prediction. ``--ids`` restricts
 scoring to a subset (e.g. the 200-plan LLM subset).
+
+Rooms and validity depend on whether a prediction declares rooms. A plan with
+declared rooms is scored on those rooms (each must close into a wall cycle,
+otherwise it is dropped, and validity fails). A plan without rooms is scored
+on the polygonized faces of its wall graph. ``--drop-pred-rooms`` forces the
+second convention; the paper's LLM row was scored that way.
 """
 from __future__ import annotations
 
@@ -35,7 +41,7 @@ def load_preds(p: Path):
     return {j["id"]: j.get("pred") for j in (json.loads(l) for l in open(p))}
 
 
-def score(rows, preds, tols=(0.05, 0.015), full=True):
+def score(rows, preds, tols=(0.05, 0.015), full=True, drop_pred_rooms=False):
     out = {"n": len(rows), "covered": 0, "tols": {}}
     per = {t: {"wall_f1": [], "wall_p": [], "wall_r": [], "room_f1": [], "open_f1": [], "edit": []} for t in tols}
     r_val = []
@@ -50,6 +56,8 @@ def score(rows, preds, tols=(0.05, 0.015), full=True):
             r_val.append(0.0)
             continue
         out["covered"] += 1
+        if drop_pred_rooms:
+            p = {"walls": p.get("walls", [])}
         pred = from_vlm_json(p, frame=1024.0)
         for t in tols:
             if full:
@@ -77,10 +85,15 @@ def main():
     ap.add_argument("--ids", default=None, help="json list of row ids to restrict scoring to")
     ap.add_argument("--tol", type=float, nargs="+", default=[0.05, 0.015])
     ap.add_argument("--walls-only", action="store_true", help="wall F1 only (fast)")
+    ap.add_argument("--drop-pred-rooms", action="store_true",
+                    help="ignore the prediction's declared rooms: rooms are then read as the polygonized "
+                         "faces of the predicted wall graph and validity needs no declared cycle to close "
+                         "(the convention of every walls-only row in the paper, and of its LLM row)")
     a = ap.parse_args()
     ids = json.load(open(a.ids)) if a.ids else None
     rows = load_rows(Path(a.bench), a.split, ids)
-    res = score(rows, load_preds(Path(a.preds)), tuple(a.tol), full=not a.walls_only)
+    res = score(rows, load_preds(Path(a.preds)), tuple(a.tol), full=not a.walls_only,
+                drop_pred_rooms=a.drop_pred_rooms)
     print(json.dumps(res, indent=1))
 
 
