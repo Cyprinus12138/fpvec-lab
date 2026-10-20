@@ -1,0 +1,17 @@
+# Pinned set the released numbers were produced with (Python 3.11).
+numpy==2.4.6
+shapely==2.1.2
+scipy==1.17.1
+scikit-image==0.26.0
+opencv-python-headless==4.13.0.92
+pillow==12.3.0
+networkx==3.6.1
+# fpgen renderer
+skia-python
+# skv4 / resplan_fp converters
+svgpathtools
+cairosvg
+sknw
+# data download/upload
+huggingface_hub
+pytest

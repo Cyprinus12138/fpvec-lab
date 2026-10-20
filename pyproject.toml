@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fpvec-lab"
+version = "0.1.0"
+description = "Floorplan vectorization research kit: fpeval metrics (incl. edit cost), the ResPlan-FP benchmark builder, skv4 CubiCasa5K annotation converter, and the fpgen synthetic generator"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "He Zhang" }]
+dependencies = [
+    "numpy",
+    "shapely>=2.0",
+    "scipy",
+    "scikit-image",
+    "opencv-python-headless",
+    "pillow",
+]
+
+[project.optional-dependencies]
+fpgen = ["skia-python"]
+skv4 = ["svgpathtools", "cairosvg", "sknw", "networkx"]
+resplan = ["sknw", "networkx"]
+data = ["huggingface_hub"]
+test = ["pytest"]
+all = ["skia-python", "svgpathtools", "cairosvg", "sknw", "networkx", "huggingface_hub", "pytest"]
+
+[project.urls]
+Repository = "https://github.com/Cyprinus12138/fpvec-lab"
+Paper = "https://arxiv.org/abs/2608.25608"
+
+[tool.setuptools]
+packages = ["fpeval", "fpseq", "fpgen", "fpgen.scripts", "skv4", "resplan_fp"]
+
+[tool.setuptools.package-data]
+fpgen = ["assets/*.json"]
+resplan_fp = ["splits.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

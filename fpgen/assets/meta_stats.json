@@ -1,0 +1,13 @@
+{
+ "source": "/mnt/e/proj/PropWise/scripts/cos-crawler/output/floor_plan_title_extractions.jsonl",
+ "records_scanned": 29300,
+ "records_parsed": 18203,
+ "bed_bath": {
+  "0,1": 97,
+  "1,1": 2771,
+  "2,2": 5170,
+  "3,2": 6554,
+  "4,3": 3052,
+  "5,4": 515
+ }
+}

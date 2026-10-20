@@ -1,0 +1,480 @@
+{
+  "walls": [
+    {
+      "id": "wall_1",
+      "start": [
+        10,
+        100
+      ],
+      "end": [
+        282,
+        100
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_2",
+      "start": [
+        282,
+        100
+      ],
+      "end": [
+        322,
+        42
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_3",
+      "start": [
+        322,
+        42
+      ],
+      "end": [
+        569,
+        42
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "window",
+          "center": [
+            446,
+            42
+          ],
+          "width": 239
+        }
+      ]
+    },
+    {
+      "id": "wall_4",
+      "start": [
+        569,
+        42
+      ],
+      "end": [
+        637,
+        100
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_5",
+      "start": [
+        637,
+        100
+      ],
+      "end": [
+        897,
+        100
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "window",
+          "center": [
+            716,
+            100
+          ],
+          "width": 127
+        }
+      ]
+    },
+    {
+      "id": "wall_6",
+      "start": [
+        897,
+        100
+      ],
+      "end": [
+        945,
+        243
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_7",
+      "start": [
+        945,
+        243
+      ],
+      "end": [
+        945,
+        915
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "window",
+          "center": [
+            945,
+            315
+          ],
+          "width": 95
+        }
+      ]
+    },
+    {
+      "id": "wall_8",
+      "start": [
+        945,
+        915
+      ],
+      "end": [
+        10,
+        915
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_9",
+      "start": [
+        10,
+        915
+      ],
+      "end": [
+        10,
+        100
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_10",
+      "start": [
+        637,
+        100
+      ],
+      "end": [
+        637,
+        483
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "door",
+          "center": [
+            637,
+            525
+          ],
+          "width": 64
+        }
+      ]
+    },
+    {
+      "id": "wall_11",
+      "start": [
+        637,
+        483
+      ],
+      "end": [
+        804,
+        483
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_12",
+      "start": [
+        804,
+        483
+      ],
+      "end": [
+        804,
+        630
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_13",
+      "start": [
+        10,
+        477
+      ],
+      "end": [
+        231,
+        477
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "door",
+          "center": [
+            179,
+            477
+          ],
+          "width": 48
+        }
+      ]
+    },
+    {
+      "id": "wall_14",
+      "start": [
+        231,
+        477
+      ],
+      "end": [
+        509,
+        477
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "door",
+          "center": [
+            446,
+            477
+          ],
+          "width": 48
+        }
+      ]
+    },
+    {
+      "id": "wall_15",
+      "start": [
+        231,
+        477
+      ],
+      "end": [
+        231,
+        915
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_16",
+      "start": [
+        346,
+        477
+      ],
+      "end": [
+        346,
+        692
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_17",
+      "start": [
+        231,
+        692
+      ],
+      "end": [
+        504,
+        692
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "door",
+          "center": [
+            362,
+            692
+          ],
+          "width": 44
+        },
+        {
+          "type": "door",
+          "center": [
+            282,
+            692
+          ],
+          "width": 44
+        }
+      ]
+    },
+    {
+      "id": "wall_18",
+      "start": [
+        424,
+        601
+      ],
+      "end": [
+        424,
+        692
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_19",
+      "start": [
+        402,
+        692
+      ],
+      "end": [
+        402,
+        915
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_20",
+      "start": [
+        402,
+        734
+      ],
+      "end": [
+        504,
+        734
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "door",
+          "center": [
+            450,
+            734
+          ],
+          "width": 44
+        }
+      ]
+    },
+    {
+      "id": "wall_21",
+      "start": [
+        504,
+        692
+      ],
+      "end": [
+        504,
+        915
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    },
+    {
+      "id": "wall_22",
+      "start": [
+        504,
+        630
+      ],
+      "end": [
+        756,
+        630
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "door",
+          "center": [
+            557,
+            630
+          ],
+          "width": 72
+        }
+      ]
+    },
+    {
+      "id": "wall_23",
+      "start": [
+        804,
+        630
+      ],
+      "end": [
+        804,
+        915
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": [
+        {
+          "type": "door",
+          "center": [
+            804,
+            682
+          ],
+          "width": 48
+        }
+      ]
+    },
+    {
+      "id": "wall_24",
+      "start": [
+        804,
+        630
+      ],
+      "end": [
+        945,
+        630
+      ],
+      "thickness": 14,
+      "curvature": 0,
+      "openings": []
+    }
+  ],
+  "rooms": [
+    {
+      "label": "living",
+      "walls": []
+    },
+    {
+      "label": "dining",
+      "walls": []
+    },
+    {
+      "label": "master bedroom 1",
+      "walls": []
+    },
+    {
+      "label": "kitchen",
+      "walls": []
+    },
+    {
+      "label": "utility",
+      "walls": []
+    },
+    {
+      "label": "bath 2",
+      "walls": []
+    },
+    {
+      "label": "yard",
+      "walls": []
+    },
+    {
+      "label": "wc",
+      "walls": []
+    },
+    {
+      "label": "bedroom 2",
+      "walls": []
+    },
+    {
+      "label": "bath",
+      "walls": []
+    }
+  ]
+}
