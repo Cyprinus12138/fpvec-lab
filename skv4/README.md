@@ -2,7 +2,7 @@
 
 Non-commercial: the vendored CubiCasa5K parser (`svg_utils.py`) is CC BY-NC 4.0
 and the CubiCasa5K data is CC BY-NC-SA 4.0. The released annotations
-(`Cyprinus12138/cubicasa5k-skv4` on the Hub) inherit CC BY-NC-SA 4.0.
+(`Tristan12138/cubicasa5k-skv4` on the Hub) inherit CC BY-NC-SA 4.0.
 
 Rebuild from the source release:
 

@@ -15,7 +15,7 @@ from pathlib import Path
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("folder"); ap.add_argument("name")
-    ap.add_argument("--user", default="Cyprinus12138")
+    ap.add_argument("--user", default="Tristan12138")
     ap.add_argument("--private", action="store_true")
     a = ap.parse_args()
     from huggingface_hub import HfApi

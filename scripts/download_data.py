@@ -4,7 +4,7 @@
     python scripts/download_data.py cubicasa5k-skv4     # -> data/cubicasa5k-skv4/
     python scripts/download_data.py all
 
-Set HF_USER to override the dataset namespace (default: Cyprinus12138).
+Set HF_USER to override the dataset namespace (default: Tristan12138).
 """
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ import tarfile
 from pathlib import Path
 
 NAMES = ("resplan-fp", "cubicasa5k-skv4")
-USER = os.environ.get("HF_USER", "Cyprinus12138")
+USER = os.environ.get("HF_USER", "Tristan12138")
 ROOT = Path(__file__).resolve().parents[1] / "data"
 
 

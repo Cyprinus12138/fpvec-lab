@@ -3,7 +3,7 @@
 ResPlan-FP is 16,998 residential plans from [ResPlan](https://arxiv.org/abs/2508.14006)
 converted to wall-first vector ground truth and rendered under one frozen
 protocol. The released data lives on the Hugging Face Hub
-(`Cyprinus12138/resplan-fp`, CC BY 4.0; see `../data/README.md`). This package
+(`Tristan12138/resplan-fp`, CC BY 4.0; see `../data/README.md`). This package
 is what produced it, so anyone can rebuild and verify it.
 
 ```bash
