@@ -49,11 +49,12 @@ def score(rows, preds, tols=(0.05, 0.015), full=True, drop_pred_rooms=False):
         gt = from_vlm_json(r["gt"], frame=float(r.get("frame", 1024.0)))
         p = preds.get(r["id"])
         if p is None:
+            zero_keys = ("wall_f1", "wall_p", "wall_r") + (("room_f1", "open_f1") if full else ())
             for t in tols:
-                for k in per[t]:
-                    if k != "edit":
-                        per[t][k].append(0.0)
-            r_val.append(0.0)
+                for k in zero_keys:
+                    per[t][k].append(0.0)
+            if full:
+                r_val.append(0.0)
             continue
         out["covered"] += 1
         if drop_pred_rooms:
