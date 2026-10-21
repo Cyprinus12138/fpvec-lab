@@ -1,8 +1,8 @@
 # fpgen — synthetic floorplan data engine
 
 Generates stylized SG-condo floorplan rasters with pixel-perfect vector ground
-truth. Implements REQ-6 (pixel-aligned supervision via a tracked `H = N·G·A`
-transform) and REQ-8 (symbol priors + document realism), with SG conventions
+truth. Supervision stays pixel-aligned via a tracked `H = N·G·A` transform;
+symbol priors and document degradation add realism, with SG conventions
 mined from a corpus of 18k Singapore residential listings (room-role
 vocabulary, printed labels, area bands, unit-mix statistics); only the fitted
 aggregate statistics ship here (`assets/meta_stats.json`), no listing content.
@@ -44,7 +44,7 @@ python fpgen/scripts/fit_meta.py --input <titles.jsonl>
 3. **Render** (`styles.py`, `symbols.py`, `render.py`) — skia, everything in
    mm under one affine `A`; families: clean_cad / marketing / brochure /
    hand_drawn (stroke-jitter only — GT untouched). Dimension chains + scale
-   bar carry TRUE metric values (REQ-5). Labels sampled from the SG printed
+   bar carry TRUE metric values. Labels sampled from the SG printed
    vocabulary; controlled label-on-wall occlusion (p≈0.35, frac recorded).
 4. **Degrade** (`degrade.py`) — stage 1: similarity `G` (rot ≤3°, scale
    0.85–1.05) tracked exactly; stage 2: appearance-only whitelist
@@ -69,15 +69,9 @@ python fpgen/scripts/fit_meta.py --input <titles.jsonl>
   evaluation tiers (777001–4; 777004 = the open-plan tier). Do not train on
   seeds in this range if you want to compare against the paper's numbers.
 
-## Deliberately out of scope (v1)
+## Out of scope
 
-Multi-unit / multi-storey / dual-key plans; curved walls (schema field
-`curvature_mm` exists, renderer/eval tolerance test pending); perspective-class
-degradation (thickness stops being a scalar — gated behind M4); ResPlan
-real-layout arm (`resplan.py`, M4); degradation calibration vs the real corpus
-(`calibrate.py`, M4).
-
-Note: Autodesk US12518066B2 (granted 2026) covers room-conditioned synthetic
-symbol placement for training detectors. fpgen is internal training tooling,
-not a shipped product feature — flagged for legal review before any
-productization of the generator itself.
+Multi-unit / multi-storey / dual-key plans; curved walls (the schema field
+`curvature_mm` exists, but the renderer and the evaluator's tolerance for arcs
+are untested); perspective-class degradation, under which thickness stops being
+a scalar; degradation calibration against a real scanned corpus.

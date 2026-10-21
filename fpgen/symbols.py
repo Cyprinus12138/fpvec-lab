@@ -5,7 +5,7 @@ x in [-w/2, w/2], y in [-d/2, d/2]; y = -d/2 is the BACK (wall side),
 y = +d/2 the front. The renderer sets up translation+rotation; glyphs are
 pure strokes via the duck-typed draw helper `g` (line/rect/circle/arc/poly).
 
-REQ-8 note: bookshelf is deliberately drawn with parallel shelf lines so it
+Note: bookshelf is deliberately drawn with parallel shelf lines so it
 resembles a stair run — the confusable pair the training data must teach.
 """
 

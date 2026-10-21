@@ -1,4 +1,4 @@
-"""fpgen — synthetic floorplan training-data engine (research-plan §4 E2).
+"""fpgen — synthetic floorplan training-data engine.
 
 Public API: GenConfig, generate. CLI: python -m fpgen --help
 """

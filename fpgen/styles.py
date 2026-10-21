@@ -1,7 +1,7 @@
 """Style-family parameter sampling.
 
 A StyleParams is drawn once per image; families are priors over the same
-parameter space. M1 ships clean_cad; marketing/brochure/hand_drawn are M2/M3.
+parameter space: clean_cad, marketing, brochure, hand_drawn.
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ class StyleParams:
     family: str
     bg_color: tuple[int, int, int] = (255, 255, 255)
     wall_fill: tuple[int, int, int] = (20, 20, 20)
-    wall_render: str = "solid"  # solid | hollow (M2: hatch)
+    wall_render: str = "solid"  # solid | hollow
     wall_outline_mm: float = 0.0  # >0: stroke wall band outline
     stroke_color: tuple[int, int, int] = (30, 30, 30)
     furniture_stroke_mm: float = 22.0
@@ -27,7 +27,7 @@ class StyleParams:
     area_font_mm: float = 190.0
     show_area: bool = True
     window_lines: int = 2
-    detail: str = "outline"  # outline | rich (M2 marketing)
+    detail: str = "outline"  # outline | rich (marketing)
     show_dims: bool = False       # dimension chains along two envelope sides
     show_scalebar: bool = False
     dim_font_mm: float = 170.0
@@ -36,7 +36,7 @@ class StyleParams:
     draw_soft_furniture: bool = True  # line_cad bare skeleton: drop movable furniture
 
 
-# soft floor fills for the marketing family (M2); clean_cad uses none
+# soft floor fills for the marketing family; clean_cad uses none
 _MARKETING_FLOORS = {
     "living_dining": (245, 238, 226), "living": (245, 238, 226),
     "dining": (245, 238, 226), "bedroom": (240, 231, 219),

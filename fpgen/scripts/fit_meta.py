@@ -1,6 +1,6 @@
 """Fit unit-mix meta distributions from the SG corpus title extractions.
 
-Parses PropWise cos-crawler floor_plan_title_extractions.jsonl (29.3k records;
+Parses a JSONL of listing-title extractions (29.3k records;
 titles like "#1 Loft 1 Bedroom, 2 Bathroom Type A1-P Floor Plan") into a joint
 P(n_bed, n_bath) histogram and writes fpgen/assets/meta_stats.json.
 
@@ -66,7 +66,7 @@ def main() -> None:
     total = sum(joint.values())
     kept = {k: v for k, v in joint.items() if v / total >= 0.003}
     doc = {
-        "source": str(args.input),
+        "source": "SG residential listing titles (not redistributed; see fpgen/scripts/fit_meta.py)",
         "records_scanned": n_total,
         "records_parsed": n_parsed,
         "bed_bath": {f"{b},{ba}": c for (b, ba), c in sorted(kept.items())},

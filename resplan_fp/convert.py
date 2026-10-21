@@ -69,8 +69,8 @@ def _normalize_keys(plan: dict) -> dict:
 
 
 def walls_from_band(band_parts, wall_depth, ox, oy, H, W, res=4.0):
-    """ResPlan analog of cc5k_convert.walls_from_skeleton (same machinery, but
-    that function is bound to cc5k's SVG parse). Rasterize the wall band
+    """ResPlan analog of skv4.convert.walls_from_skeleton (same machinery, but
+    that function is bound to the CubiCasa5K SVG parse). Rasterize the wall band
     polygons (walls + door/window bodies, which fill the opening gaps so the
     band is continuous) -> morphological close -> skeletonize -> sknw graph
     (nodes = junctions, edges = wall runs) -> Douglas-Peucker each run into

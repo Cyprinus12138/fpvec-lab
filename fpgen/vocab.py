@@ -1,8 +1,7 @@
 """SG printed-label vocabulary and text formatting.
 
-Label spellings vendored from the PropWise corpus vocabulary
-(scripts/floorplan-extractor/dq_profile.py ROOM_WORDS) plus common marketing
-variants seen in the SG corpus. Keyed by room role; each entry is a list of
+Label spellings mined from the SG listing corpus plus common marketing
+variants seen there. Keyed by room role; each entry is a list of
 (label, weight) sampled per plan so different plans use different conventions.
 """
 

@@ -6,13 +6,13 @@ Triple duty:
   3. evaluation harness (validity, Ext-IoU, Room-IoU, Room-F1@0.5, Opening-F1, Wall-F1)
 """
 
-from .model import FloorPlan, Wall, Opening, Room, from_vlm_json, from_propwise_dsl
+from .model import FloorPlan, Wall, Opening, Room, from_vlm_json
 from .verify import verify, VerifyResult
 from .metrics import evaluate, alpha_gate, EvalReport
 
 __all__ = [
     "FloorPlan", "Wall", "Opening", "Room",
-    "from_vlm_json", "from_propwise_dsl",
+    "from_vlm_json",
     "verify", "VerifyResult",
     "evaluate", "alpha_gate", "EvalReport",
 ]

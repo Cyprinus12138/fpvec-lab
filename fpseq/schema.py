@@ -61,8 +61,8 @@ THICK_SCALE = 8.0
 CURV_SCALE = 4.0
 
 # --------------------------------------------------------------------------
-# Semantic classes — one per-token CE head (non-gating; labels are REQ-7 OCR's
-# job). Layout: [room roles ... | wall types ... | opening kinds ... | filler].
+# Semantic classes — one per-token CE head (non-gating; printed labels are
+# left to OCR). Layout: [room roles ... | wall types ... | opening kinds ... | filler].
 # ROOM_ROLES is frozen from fpgen's printed-label vocabulary (fpgen.vocab.LABELS
 # keys) — the guaranteed superset of Room.role, since labeling is keyed by role.
 # A drift guard in tests/test_fpseq_roundtrip.py asserts this stays in sync.
@@ -163,8 +163,7 @@ LEGAL_NEXT: dict[TT | None, frozenset] = {
 }
 
 # --------------------------------------------------------------------------
-# Event layer — the human-inspectable structured form (raw-event JSON dump in
-# M3). Points and lengths are in FRAME coordinates (not normalized); the tensor
+# Event layer — the human-inspectable structured form. Points and lengths are in FRAME coordinates (not normalized); the tensor
 # layer applies frame normalization. plan_to_events/events_to_plan operate here.
 # --------------------------------------------------------------------------
 

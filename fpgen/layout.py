@@ -1,8 +1,7 @@
 """Spatial realization: program tree -> room polygons -> wall graph.
 
-Recursive proportional guillotine splits over a rectangular envelope (M1:
-rect + Manhattan only; L/notch envelopes and non-Manhattan passes arrive in
-M2). Rooms tile the envelope exactly, so shared cell edges ARE wall
+Recursive proportional guillotine splits over a rectangular envelope
+(rectangular, Manhattan layouts only). Rooms tile the envelope exactly, so shared cell edges ARE wall
 centerlines. Every room cycle closes by construction EXCEPT open-plan LDK
 boundaries, which are deliberately left wall-less (an open edge on the cycle);
 watertightness there is region-based (the polygons still tile), not wall-based.
@@ -452,7 +451,7 @@ def _merge_collinear(
             lo, hi = sorted([a, b], key=lambda p: p[1])
         elif abs(a[1] - b[1]) < 1e-6:  # horizontal
             lo, hi = sorted([a, b], key=lambda p: p[0])
-        else:  # non-Manhattan (M2): pass through unmerged
+        else:  # non-Manhattan: pass through unmerged
             out.append((a, b, key))
             continue
         if (lo, hi) != (a, b):  # direction flipped -> left/right rooms swap

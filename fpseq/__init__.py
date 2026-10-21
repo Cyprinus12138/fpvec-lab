@@ -1,4 +1,4 @@
-"""fpseq — torch-free wall-first ScenePlan sequence codec (E3 M1).
+"""fpseq — torch-free wall-first ScenePlan sequence codec.
 
 Round-trip: fpeval FloorPlan <-> events <-> flat tensors. Shipped here because the
 skv4 / ResPlan-FP converters use its capacity gate (SEQ_LEN / MAX_WALLS) when

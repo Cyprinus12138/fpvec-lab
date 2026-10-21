@@ -1,10 +1,9 @@
 """Pred-vs-GT metrics + FloorplanVLM-style gated reward.
 
-Metrics (brief §5.6): validity rate, Ext-IoU, Room-IoU, Room-F1@0.5,
-Opening-F1 — plus Wall-F1 and mean aligned wall distance (our own
-"numbers to beat": <10% walls missing, <5cm aligned).
+Metrics: validity rate, Ext-IoU, Room-IoU, Room-F1@0.5,
+Opening-F1 — plus Wall-F1 and mean aligned wall distance.
 
-Reward (brief §4.3): R = 0.1*R_val + 0.5*R_ext + 0.4*alpha*R_int, where
+Reward: R = 0.1*R_val + 0.5*R_ext + 0.4*alpha*R_int, where
 alpha gates internal credit on the external boundary being right.
 """
 
@@ -135,10 +134,10 @@ def opening_metrics(pred: FloorPlan, gt: FloorPlan, tol_dist: float) -> dict:
 
 # ---------------------------------------------------------- human edit cost
 
-# Topology-aware CAD edit distance (research-plan §5): estimated human cost to
+# Topology-aware CAD edit distance: estimated human cost to
 # turn a prediction into GT in the editor. Hand-set, NON-GATING weights; the
-# ORDERING is the load-bearing claim (calibrate magnitudes against real editor
-# ops later). Ordering: move/snap << type-change < create/delete << open<->wall
+# ORDERING is the load-bearing claim (magnitudes are not calibrated against
+# real editor ops). Ordering: move/snap << type-change < create/delete << open<->wall
 # conversion. Open<->phantom is most expensive because it is delete-wall PLUS
 # re-open the room boundary (or vice versa) — the exact op room-centric models
 # force by manufacturing phantom/double walls on shared/open edges.
@@ -217,7 +216,7 @@ def edit_cost(pred: FloorPlan, gt: FloorPlan, tol_dist: float,
             total += W["delete"]; ops["delete"] += 1
 
     # openings: generous center match; move / create / delete (reattach folds into
-    # delete+create when the host wall is a phantom — a v2 calibration refinement).
+    # delete+create when the host wall is a phantom).
     po, go = pred.openings, gt.openings
     ocost = []
     for a in po:

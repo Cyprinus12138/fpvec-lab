@@ -1,4 +1,4 @@
-"""fpeval edit-cost metric — the paper's human-edit-cost contribution (§5).
+"""fpeval edit-cost metric — the paper's human-edit-cost contribution.
 
 Constructs a 2-room open-plan GT (shared middle wall + one open boundary edge)
 and two predictions with IDENTICAL rooms:

@@ -17,8 +17,7 @@ import numpy as np
 _STATS_PATH = Path(__file__).parent / "assets" / "meta_stats.json"
 
 # Plausible total_area_sqm bands by bedroom count.
-# Provenance: PropWise scripts/floorplan-extractor/dq_profile.py AREA_BANDS_SQM
-# (vendored — values are corpus-sanity bands, not regulation).
+# Corpus-sanity bands from the SG listing corpus, not regulation.
 AREA_BANDS_SQM: dict[int, tuple[float, float]] = {
     0: (25, 60),
     1: (30, 80),
@@ -29,7 +28,7 @@ AREA_BANDS_SQM: dict[int, tuple[float, float]] = {
 }
 
 # Fallback joint distribution P(n_bed, n_bath) for condo_apartment, roughly
-# matching SG new-launch unit mixes (superseded by fitted meta_stats.json).
+# matching SG new-launch unit mixes (used only if meta_stats.json is missing).
 _FALLBACK_BED_BATH: dict[tuple[int, int], float] = {
     (0, 1): 0.06,   # studio
     (1, 1): 0.18,
@@ -43,7 +42,7 @@ _FALLBACK_BED_BATH: dict[tuple[int, int], float] = {
 
 @dataclass
 class UnitMeta:
-    property_type: str  # condo_apartment | landed_house (v1: condo only)
+    property_type: str  # condo_apartment | landed_house (only condo is generated)
     n_bed: int          # 0 = studio
     n_bath: int
     target_area_sqm: float

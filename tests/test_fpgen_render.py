@@ -1,4 +1,4 @@
-"""Render + degrade properties: the REQ-6 alignment guard.
+"""Render + degrade properties: the pixel-alignment guard.
 
 test_registration_alignment is the contract that keeps degrade.SAFE_OPS
 honest: registration crosses drawn at known pixel positions must land within

@@ -1,7 +1,7 @@
 """Skia renderer: ScenePlan + StyleParams -> (RGB image, A matrix, text bboxes).
 
 Everything is drawn in mm under a single affine A (mm -> px) set on the
-canvas, so vector GT stays pixel-aligned by construction (REQ-6). Text bboxes
+canvas, so vector GT stays pixel-aligned by construction. Text bboxes
 are measured with skia font metrics and backfilled onto plan.texts in mm.
 """
 
@@ -205,7 +205,7 @@ def _draw_opening_symbol(d: Draw, w: Wall, o: Opening, style: StyleParams):
 def _draw_annotations(plan: ScenePlan, d: Draw, style: StyleParams,
                       rng: np.random.Generator) -> None:
     """Dimension chains (top + left) and scale bar — true metric values, the
-    REQ-5 scale-grounding signal. Appends TextItems; bboxes backfilled by the
+    scale-grounding signal. Appends TextItems; bboxes backfilled by the
     main text pass."""
     from .vocab import dim_text
     bw, bh = plan.bbox_mm

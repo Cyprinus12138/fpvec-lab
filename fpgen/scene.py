@@ -1,8 +1,7 @@
 """Canonical mm-space scene representation for fpgen.
 
-This is fpgen's own schema (deliberately NOT the PropWise DSL): built to export
-the dependency-ordered VLM JSON that fpeval scores and the Pascal adapter
-consumes. Conventions: origin top-left, +x right, +y down, integer-ish mm,
+This is fpgen's own schema, built to export the dependency-ordered VLM JSON
+that fpeval scores. Conventions: origin top-left, +x right, +y down, integer-ish mm,
 coordinates snapped to a 10 mm grid at layout time.
 
 The only two serialized formats are:

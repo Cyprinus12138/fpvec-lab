@@ -46,13 +46,6 @@ class GenConfig:
     workers: int = 1
 
 
-@dataclass
-class SampleRecord:
-    id: str
-    ok: bool
-    manifest: dict | None = None
-    rejects: dict[str, int] = field(default_factory=dict)
-
 
 def _pick_style_family(rng: np.random.Generator, mix: dict[str, float]) -> str:
     keys = sorted(mix)
@@ -64,7 +57,7 @@ def _label_rooms(layout, style, rng) -> None:
     """Assign printed labels + text items (labels land in GT room entries).
 
     With p~0.35 per plan one label is deliberately shifted onto a wall band —
-    the REQ-8 controlled partial-occlusion condition; the target fraction is
+    the controlled partial-occlusion condition; the target fraction is
     recorded in plan.meta.
     """
     from .semantics import _inward_normal

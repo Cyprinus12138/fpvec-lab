@@ -1,5 +1,5 @@
 {
- "source": "/mnt/e/proj/PropWise/scripts/cos-crawler/output/floor_plan_title_extractions.jsonl",
+ "source": "SG residential listing titles (not redistributed; see fpgen/scripts/fit_meta.py)",
  "records_scanned": 29300,
  "records_parsed": 18203,
  "bed_bath": {

@@ -13,7 +13,7 @@ from .model import FloorPlan, Point
 def weld_points(plan: FloorPlan, tol: float) -> dict[Point, Point]:
     """Cluster wall endpoints within `tol`; map raw endpoint -> cluster centroid.
 
-    Same trick as pascal_adapter's _weld: greedy clustering, order-stable."""
+    Greedy clustering, order-stable."""
     mapping: dict[Point, Point] = {}
     clusters: list[list[Point]] = []
     for w in plan.walls:

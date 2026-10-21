@@ -1,7 +1,7 @@
 """Document degradation: stage 1 geometric similarity (tracked in G),
 stage 2 appearance-only ops (Augraphy whitelist + own ops).
 
-REQ-6 contract: stage 2 ops MUST NOT displace pixels — anything geometric is
+Alignment contract: stage 2 ops MUST NOT displace pixels — anything geometric is
 expressed in G and propagated to the GT via H = N @ G @ A. The whitelist is
 enforced by tests/test_fpgen_render.py::test_registration_alignment.
 """

@@ -17,7 +17,6 @@ cc5k is CC-BY-NC-SA -> research/paper only, NEVER ship-path.
 from __future__ import annotations
 
 import math
-import sys
 from pathlib import Path
 from xml.dom import minidom
 
@@ -177,27 +176,6 @@ def _weld(walls, tol):
     return [(cent[p0], cent[p1], wdt, wt) for p0, p1, wdt, wt in walls]
 
 
-def _seg_overlap_on_edge(wp0, wp1, a, b, tol):
-    """True if wall segment (wp0,wp1) lies along polygon edge (a,b): collinear +
-    projection overlap."""
-    ex, ey = b[0] - a[0], b[1] - a[1]
-    L = math.hypot(ex, ey)
-    if L < 1e-6:
-        return False
-    ux, uy = ex / L, ey / L
-
-    def foot(p):
-        return (p[0] - a[0]) * ux + (p[1] - a[1]) * uy
-
-    def perp(p):
-        return abs(-(p[0] - a[0]) * uy + (p[1] - a[1]) * ux)
-
-    if perp(wp0) > tol or perp(wp1) > tol:
-        return False
-    t0, t1 = sorted((foot(wp0), foot(wp1)))
-    return min(t1, L) - max(t0, 0.0) > 0.25 * min(L, math.dist(wp0, wp1) + 1e-6)
-
-
 def to_vlm_json(walls, rooms, openings, H, W, weld_frac=0.02):
     s = FRAME / max(H, W)
     tol = FRAME * weld_frac
@@ -222,8 +200,8 @@ def to_vlm_json(walls, rooms, openings, H, W, weld_frac=0.02):
     # live on wall centerlines, so fpeval's region-tiling watertightness holds.
     # (The previous nearest-room partition kept inner-face polygons whose union
     # is disconnected -> GT r_val=0 on 99.4% of plans, and proximity-picked
-    # wall_ids chained closed only 44% -> incoherent room supervision. Both
-    # measured 2026-07-08; that room collapse was a GT artifact, not the model.)
+    # wall_ids chained closed only 44% -> incoherent room supervision; that
+    # room collapse was a GT artifact, not the model.)
     # Labels: max-overlap against the original cc5k room polygons; faces no
     # cc5k room claims (shafts/closets) stay 'undefined' so the tiling has no
     # holes.
@@ -291,11 +269,10 @@ def to_vlm_json(walls, rooms, openings, H, W, weld_frac=0.02):
 
 
 def _axis_clean(walls, snap_deg=12.0, drop_deg=30.0):
-    """Reduce walls-from-rooms noise: snap near-axis walls to exact H/V (cc5k is
-    ~Manhattan; also re-centers the room-inner-face offset onto the centerline),
-    and drop steep diagonals (>drop_deg from the nearest axis) — those are almost
-    always nearest-room-partition / degenerate-polygon artifacts (radiating
-    'star' segments around fixtures), not real walls. Walls between snap_deg and
+    """Snap near-axis walls to exact H/V (cc5k is ~Manhattan) and drop steep
+    diagonals (>drop_deg from the nearest axis) — those are almost always
+    skeleton / degenerate-polygon artifacts (radiating 'star' segments around
+    fixtures), not real walls. Walls between snap_deg and
     drop_deg are kept as-is (genuine mild angles)."""
     st = math.tan(math.radians(snap_deg))
     dt = math.tan(math.radians(drop_deg))
@@ -313,111 +290,6 @@ def _axis_clean(walls, snap_deg=12.0, drop_deg=30.0):
         if min(adx, ady) > dt * max(adx, ady):   # steeper than drop_deg -> artifact
             continue
         out.append((a, b, th, typ))          # mild diagonal -> keep
-    return out
-
-
-def _norm(vx, vy):
-    L = math.hypot(vx, vy) or 1.0
-    return vx / L, vy / L
-
-
-def _facing(a, b, c, d, gap):
-    """Edges (a,b) and (c,d) face each other across a wall gap: near-parallel,
-    perpendicular separation in (small, gap], projection overlap."""
-    ux, uy = _norm(b[0] - a[0], b[1] - a[1])
-    vx, vy = _norm(d[0] - c[0], d[1] - c[1])
-    if abs(ux * vy - uy * vx) > 0.26:            # > ~15deg from parallel
-        return False
-    perp = abs(-(c[0] - a[0]) * uy + (c[1] - a[1]) * ux)
-    if not (1.5 < perp <= gap):                   # across a gap, not coincident
-        return False
-    L = math.hypot(b[0] - a[0], b[1] - a[1])
-    tc = (c[0] - a[0]) * ux + (c[1] - a[1]) * uy
-    td = (d[0] - a[0]) * ux + (d[1] - a[1]) * uy
-    lo, hi = max(0.0, min(tc, td)), min(L, max(tc, td))
-    return hi - lo > 0.3 * min(L, math.dist(c, d))
-
-
-def _midline(a, b, c, d):
-    """Centerline between two facing edges (endpoint-matched)."""
-    if math.dist(a, c) + math.dist(b, d) <= math.dist(a, d) + math.dist(b, c):
-        return ((a[0] + c[0]) / 2, (a[1] + c[1]) / 2), ((b[0] + d[0]) / 2, (b[1] + d[1]) / 2)
-    return ((a[0] + d[0]) / 2, (a[1] + d[1]) / 2), ((b[0] + c[0]) / 2, (b[1] + c[1]) / 2)
-
-
-def derive_walls_from_rooms(rooms_frame, gap, thickness):
-    """Clean room polygons (frame coords) -> wall segments. Interior walls =
-    centerline between two facing room edges; exterior walls = unpaired edges."""
-    edges = []
-    for ri, (_role, poly) in enumerate(rooms_frame):
-        for k in range(len(poly)):
-            edges.append([ri, poly[k], poly[(k + 1) % len(poly)]])
-    walls = []
-    used = [False] * len(edges)
-    for i, (ri, a, b) in enumerate(edges):
-        if used[i]:
-            continue
-        pair = None
-        for j in range(i + 1, len(edges)):
-            rj, c, d = edges[j]
-            if used[j] or rj == ri:
-                continue
-            if _facing(a, b, c, d, gap):
-                pair = j; break
-        if pair is not None:
-            _, c, d = edges[pair]
-            used[i] = used[pair] = True
-            p0, p1 = _midline(a, b, c, d)
-            walls.append((p0, p1, thickness, "interior"))
-        else:
-            used[i] = True
-            walls.append((a, b, thickness, "exterior"))
-    return walls
-
-
-def _partition_rooms(rooms_frame, thickness, res: int = 2):
-    """Nearest-room partition: assign every point of the building footprint to the
-    nearest room polygon -> watertight tiling (boundaries at wall centerlines).
-    Rasterizes at `res` px per frame unit, argmin over per-room distance
-    transforms, then vectorizes + simplifies each region back to a polygon."""
-    import cv2
-    import numpy as np
-    from scipy.ndimage import distance_transform_edt
-
-    xs = [c[0] for _, p in rooms_frame for c in p.exterior.coords]
-    ys = [c[1] for _, p in rooms_frame for c in p.exterior.coords]
-    pad = thickness * 1.5
-    x0, y0 = min(xs) - pad, min(ys) - pad
-    W = int((max(xs) + pad - x0) * res) + 1
-    H = int((max(ys) + pad - y0) * res) + 1
-
-    def raster(poly):
-        pts = np.array([[(cx - x0) * res, (cy - y0) * res] for cx, cy in poly.exterior.coords],
-                       np.int32)
-        m = np.zeros((H, W), np.uint8); cv2.fillPoly(m, [pts], 1); return m
-
-    masks = [raster(p) for _, p in rooms_frame]
-    footprint = np.zeros((H, W), np.uint8)
-    for m in masks:
-        footprint |= m
-    # close the wall-band gaps so the footprint is one solid region
-    k = int(thickness * res * 2) | 1
-    footprint = cv2.morphologyEx(footprint, cv2.MORPH_CLOSE,
-                                 cv2.getStructuringElement(cv2.MORPH_RECT, (k, k)))
-    # per-room distance (0 inside the room, growing outward) -> argmin = nearest
-    dists = np.stack([distance_transform_edt(1 - m) for m in masks])
-    label = dists.argmin(0)
-    out = []
-    for i, (role, _p) in enumerate(rooms_frame):
-        reg = ((label == i) & (footprint > 0)).astype(np.uint8)
-        cnts, _ = cv2.findContours(reg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        if not cnts:
-            continue
-        c = max(cnts, key=cv2.contourArea)
-        eps = thickness * res * 0.5
-        approx = cv2.approxPolyDP(c, eps, True).reshape(-1, 2)
-        poly = [(float(px) / res + x0, float(py) / res + y0) for px, py in approx]
-        out.append((role, poly))
     return out
 
 
@@ -446,11 +318,11 @@ def _n_floors(svg) -> int:
 
 
 def _ink_and_spur_filter(walls, img, H, W, openings):
-    """skv4: drop GT walls the INPUT IMAGE cannot support.
+    """Drop GT walls the INPUT IMAGE cannot support.
     (a) ink gate: <10% dark pixels along the centerline, sampled OUTSIDE declared
         opening spans (openings legitimately blank the band) -> phantom (invisible
-        Railing polygons / render mismatches; measured 2.1% of skv3 walls, was
-        teaching the model to hallucinate walls on blank canvas);
+        Railing polygons / render mismatches; 2.1% of walls before this gate,
+        which taught the model to hallucinate walls on blank canvas);
     (b) spur prune: free-ended stubs shorter than 2x thickness (skeleton spurs)."""
     import cv2
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if img.ndim == 3 else img
